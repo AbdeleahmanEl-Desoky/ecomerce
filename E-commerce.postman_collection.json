@@ -1,0 +1,2317 @@
+{
+	"info": {
+		"_postman_id": "1ef5160f-e903-419f-b646-fe202cc4dbeb",
+		"name": "E-commerce",
+		"description": "Complete JWT authentication system with Admin/Customer role-based access",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43148202"
+	},
+	"item": [
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Register Customer",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Customer User\",\n    \"email\": \"customer@example.com900\",\n    \"password\": \"password1231\",\n    \"password_confirmation\": \"password1231\",\n    \"role\": \"customer\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/customer/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"customer",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Customer Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjgwMDAvYXBpL3YxL2F1dGgvYWRtaW4vbG9naW4iLCJpYXQiOjE3NTg3MjI4MDYsImV4cCI6MTc1ODcyNjQwNiwibmJmIjoxNzU4NzIyODA2LCJqdGkiOiJnZzhuUTVZSjhnaVJ6YjFVIiwic3ViIjoiYmNkNzllMjktNTkzZi00MTFjLTk3OGYtMzNhZjQzZDhkZWEyIiwicHJ2IjoiYmI2NWQ5YjhmYmYwZGE5ODI3YzhlZDIzMWQ5YzU0YzgxN2YwZmJiMiJ9.mrnD2oLgSA0T2N4eDTYOdHORLS5peQ2_ug5COH0_9Tk",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{customer_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/auth/customer/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"customer",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"    const response = pm.response.json();",
+											"    if (response.success && response.data.token) {",
+											"        pm.environment.set('admin_token', response.data.token);",
+											"        console.log('Admin token saved:', response.data.token);",
+											"    }",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"customer@example.com900\",\n    \"password\": \"password1231\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/customer/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"customer",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Customer Profile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{customer_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Updated Customer Name\",\n    \"email\": \"updated.customer@example.com1\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/customer/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"customer",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "categories",
+					"item": [
+						{
+							"name": "List All categories",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/categories?per_page=10&page=1&name=&slug=&parent_id=",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "name",
+											"value": ""
+										},
+										{
+											"key": "slug",
+											"value": ""
+										},
+										{
+											"key": "parent_id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View categories by ID",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/categories/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "3e318c98-f907-4563-803b-51d1e48c37b6"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "List All Product",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/products?max_price=&page=1&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"products"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "across name, description, SKU",
+											"disabled": true
+										},
+										{
+											"key": "name",
+											"value": "",
+											"description": "Filter by product name",
+											"disabled": true
+										},
+										{
+											"key": "description",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "sku",
+											"value": "",
+											"description": "string\tIPH15\tFilter by SKU",
+											"disabled": true
+										},
+										{
+											"key": "price",
+											"value": "",
+											"description": "decimal\t999.99\tExact price match",
+											"disabled": true
+										},
+										{
+											"key": "min_price",
+											"value": "",
+											"description": "decimal\t500\tMinimum price",
+											"disabled": true
+										},
+										{
+											"key": "max_price",
+											"value": "",
+											"description": "decimal\t1500\tMaximum price"
+										},
+										{
+											"key": "price_range[]",
+											"value": "",
+											"description": "array\t[500,1500]\tPrice range",
+											"disabled": true
+										},
+										{
+											"key": "stock_quantity",
+											"value": "",
+											"description": "integer\t50\tExact stock quantity",
+											"disabled": true
+										},
+										{
+											"key": "min_stock",
+											"value": "",
+											"description": "integer\t10\tMinimum stock",
+											"disabled": true
+										},
+										{
+											"key": "max_stock",
+											"value": "",
+											"description": "integer\t100\tMaximum stock",
+											"disabled": true
+										},
+										{
+											"key": "in_stock",
+											"value": "",
+											"description": "boolean\ttrue\tProducts in/out of stock",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "",
+											"description": "active , inactive",
+											"disabled": true
+										},
+										{
+											"key": "category_id",
+											"value": "",
+											"description": "uuid\tuuid\tCategory ID",
+											"disabled": true
+										},
+										{
+											"key": "category_name",
+											"value": "",
+											"description": "string\tElectronics\tCategory name",
+											"disabled": true
+										},
+										{
+											"key": "category_slug\tstring",
+											"value": "",
+											"description": "electronics\tCategory slug",
+											"disabled": true
+										},
+										{
+											"key": "category_ids[]",
+											"value": "",
+											"description": "array\t[uuid1,uuid2]\tMultiple categories",
+											"disabled": true
+										},
+										{
+											"key": "created_between[]",
+											"value": "",
+											"description": "array\t[2025-01-01,2025-12-31]\tCreation date range",
+											"disabled": true
+										},
+										{
+											"key": "updated_between[]",
+											"value": "",
+											"description": "array\t[2025-09-01,2025-09-30]\tUpdate date range",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Product by ID",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/products/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "863fdb2b-088a-4931-b5fa-14f7911d3f22"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "List All orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/orders?page=1&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"notes\": \"Order qualifies for 10% discount\",\n    \"items\": [\n        {\n            \"product_id\": \"863fdb2b-088a-4931-b5fa-14f7911d3f22\",\n            \"quantity\": 1,\n            \"price_at_time\": 999.99\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/customer/orders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View orders by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iPhone 15 Pro\",\n    \"description\": \"Latest iPhone with advanced features\",\n    \"price\": 999.99,\n    \"stock_quantity\": 50,\n    \"sku\": \"IPH15PRO001\",\n    \"status\": \"active\",\n    \"category_id\":\"ef9b3557-090a-40c4-bb91-c9bde504c87a\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/customer/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/orders/:id/cancel",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders",
+										":id",
+										"cancel"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "List All orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/orders?page=1&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"notes\": \"Order qualifies for 10% discount\",\n    \"items\": [\n        {\n            \"product_id\": \"863fdb2b-088a-4931-b5fa-14f7911d3f22\",\n            \"quantity\": 1,\n            \"price_at_time\": 999.99\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/customer/orders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View orders by ID",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iPhone 15 Pro\",\n    \"description\": \"Latest iPhone with advanced features\",\n    \"price\": 999.99,\n    \"stock_quantity\": 50,\n    \"sku\": \"IPH15PRO001\",\n    \"status\": \"active\",\n    \"category_id\":\"ef9b3557-090a-40c4-bb91-c9bde504c87a\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/customer/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{customer_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/customer/orders/:id/cancel",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"customer",
+										"orders",
+										":id",
+										"cancel"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Admin Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (pm.response.code === 200) {",
+											"    const response = pm.response.json();",
+											"    if (response.success && response.data.token) {",
+											"        pm.environment.set('admin_token', response.data.token);",
+											"        console.log('Admin token saved:', response.data.token);",
+											"    }",
+											"}"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"updated@example.com\",\n    \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/admin/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"admin",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "adminProfile",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/auth/admin/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"admin",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update admin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Updated Customer Nasme\",\n    \"email\": \"customer@example.com1\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/auth/admin/profile",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"auth",
+										"admin",
+										"profile"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Users",
+					"item": [
+						{
+							"name": "List All Users",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/users?per_page=10&page=1&role=customer&name=&email=",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "role",
+											"value": "customer",
+											"description": "admin - customer"
+										},
+										{
+											"key": "name",
+											"value": ""
+										},
+										{
+											"key": "email",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create New User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New User\",\n    \"email\": \"newuser@example.com1\",\n    \"password\": \"password123\",\n    \"password_confirmation\":\"password123\",\n    \"role\": \"admin\" //admin - customer\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/users",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View User by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/users/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "86bb9d0d-9425-412b-a3dc-ea7df99f85d9"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Updated User Name\",\n    \"email\": \"updated@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/users/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "084064eb-57e4-4f45-acb1-7788b74f0128"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/users/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "084064eb-57e4-4f45-acb1-7788b74f0128"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "categories",
+					"item": [
+						{
+							"name": "List All categories",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/categories?per_page=10&page=1&name=&slug=&parent_id=",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									],
+									"query": [
+										{
+											"key": "per_page",
+											"value": "10"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "name",
+											"value": ""
+										},
+										{
+											"key": "slug",
+											"value": ""
+										},
+										{
+											"key": "parent_id",
+											"value": ""
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create categories",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Smartphones1\",\n    \"slug\": \"smartphones1\",\n    \"parent_id\":\"ef9b3557-090a-40c4-bb91-c9bde504c87a\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/categories",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View categories by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/categories/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update categories",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Smartphones1\",\n    \"slug\": \"smartphones1\",\n    \"parent_id\":\"ef9b3557-090a-40c4-bb91-c9bde504c87a\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/categories/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete User",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/categories/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "List All Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/products?max_price=&page=1&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"products"
+									],
+									"query": [
+										{
+											"key": "search",
+											"value": "",
+											"description": "across name, description, SKU",
+											"disabled": true
+										},
+										{
+											"key": "name",
+											"value": "",
+											"description": "Filter by product name",
+											"disabled": true
+										},
+										{
+											"key": "description",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "sku",
+											"value": "",
+											"description": "string\tIPH15\tFilter by SKU",
+											"disabled": true
+										},
+										{
+											"key": "price",
+											"value": "",
+											"description": "decimal\t999.99\tExact price match",
+											"disabled": true
+										},
+										{
+											"key": "min_price",
+											"value": "",
+											"description": "decimal\t500\tMinimum price",
+											"disabled": true
+										},
+										{
+											"key": "max_price",
+											"value": "",
+											"description": "decimal\t1500\tMaximum price"
+										},
+										{
+											"key": "price_range[]",
+											"value": "",
+											"description": "array\t[500,1500]\tPrice range",
+											"disabled": true
+										},
+										{
+											"key": "stock_quantity",
+											"value": "",
+											"description": "integer\t50\tExact stock quantity",
+											"disabled": true
+										},
+										{
+											"key": "min_stock",
+											"value": "",
+											"description": "integer\t10\tMinimum stock",
+											"disabled": true
+										},
+										{
+											"key": "max_stock",
+											"value": "",
+											"description": "integer\t100\tMaximum stock",
+											"disabled": true
+										},
+										{
+											"key": "in_stock",
+											"value": "",
+											"description": "boolean\ttrue\tProducts in/out of stock",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "",
+											"description": "active , inactive",
+											"disabled": true
+										},
+										{
+											"key": "category_id",
+											"value": "",
+											"description": "uuid\tuuid\tCategory ID",
+											"disabled": true
+										},
+										{
+											"key": "category_name",
+											"value": "",
+											"description": "string\tElectronics\tCategory name",
+											"disabled": true
+										},
+										{
+											"key": "category_slug\tstring",
+											"value": "",
+											"description": "electronics\tCategory slug",
+											"disabled": true
+										},
+										{
+											"key": "category_ids[]",
+											"value": "",
+											"description": "array\t[uuid1,uuid2]\tMultiple categories",
+											"disabled": true
+										},
+										{
+											"key": "created_between[]",
+											"value": "",
+											"description": "array\t[2025-01-01,2025-12-31]\tCreation date range",
+											"disabled": true
+										},
+										{
+											"key": "updated_between[]",
+											"value": "",
+											"description": "array\t[2025-09-01,2025-09-30]\tUpdate date range",
+											"disabled": true
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Product",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iPhone 15 Pro\",\n    \"description\": \"Latest iPhone with advanced features\",\n    \"price\": 999.99,\n    \"stock_quantity\": 50,\n    \"sku\": \"IPH15PRO001\",\n    \"status\": \"active\",\n    \"category_id\":\"ef9b3557-090a-40c4-bb91-c9bde504c87a\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/products",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View Product by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/products/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update Product",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iPhone 15 Pro\",\n    \"description\": \"Latest iPhone with advanced features\",\n    \"price\": 999.99,\n    \"stock_quantity\": 50,\n    \"sku\": \"IPH15PRO001\",\n    \"status\": \"active\",\n    \"category_id\":\"ef9b3557-090a-40c4-bb91-c9bde504c87a\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/products/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "863fdb2b-088a-4931-b5fa-14f7911d3f22"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/products/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "List All orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/orders?page=1&per_page=10",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"orders"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "per_page",
+											"value": "10"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"user_id\": \"5a178a5e-d872-47e4-8fe1-dac59a013a83\",\n    \"notes\": \"Order qualifies for 10% discount\",\n    \"items\": [\n        {\n            \"product_id\": \"863fdb2b-088a-4931-b5fa-14f7911d3f22\",\n            \"quantity\": 1,\n            \"price_at_time\": 999.99\n        }\n    ]\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/orders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"orders"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "View orders by ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update orders",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"iPhone 15 Pro\",\n    \"description\": \"Latest iPhone with advanced features\",\n    \"price\": 999.99,\n    \"stock_quantity\": 50,\n    \"sku\": \"IPH15PRO001\",\n    \"status\": \"active\",\n    \"category_id\":\"ef9b3557-090a-40c4-bb91-c9bde504c87a\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "863fdb2b-088a-4931-b5fa-14f7911d3f22"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete orders",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/orders/:id",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"orders",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "cancel  orders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{admin_token}}"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/orders/:id/cancel",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"orders",
+										":id",
+										"cancel"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "rete limit",
+					"item": [
+						{
+							"name": "statistics",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/rate_limits/statistics",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"rate_limits",
+										"statistics"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "clear-user-limits",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\":\"bcd79e29-593f-411c-978f-33af43d8dea2\"\r\n    // \"actions\":[\r\n    //      \"api\"\r\n    // ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/rate_limits/clear-user-limits",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"rate_limits",
+										"clear-user-limits"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "blacklist-ip",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ip\":\"127.0.0.1\",\r\n    \"duration_minutes\":1440,\r\n    \"reason\":\"Manual blacklist\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/rate_limits/blacklist-ip",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"rate_limits",
+										"blacklist-ip"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "remove From Blacklist",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ip\":\"127.0.0.1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/rate_limits/blacklist-ip",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"rate_limits",
+										"blacklist-ip"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "configuration",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{admin_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"limiter\" : \"api\",//api,auth,orders,products,admin,guest',\r\n    \"max_attempts\" : 5,//min:1|max:1000',\r\n    \"decay_minutes\" : 4//min:1|max:60',\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/rate_limits/configuration",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"admin",
+										"rate_limits",
+										"configuration"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000"
+		},
+		{
+			"key": "jwt_token",
+			"value": ""
+		},
+		{
+			"key": "admin_token",
+			"value": ""
+		},
+		{
+			"key": "customer_token",
+			"value": ""
+		},
+		{
+			"key": "user_id",
+			"value": "replace-with-actual-user-id"
+		}
+	]
+}
