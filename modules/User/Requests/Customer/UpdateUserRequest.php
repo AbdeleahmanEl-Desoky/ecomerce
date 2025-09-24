@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\User\Requests;
+namespace Modules\User\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Ramsey\Uuid\Uuid;
@@ -15,14 +15,16 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
+            'email' => 'required|string|email|max:255|unique:users,email,' . auth('customer')->user()->id . ',id',
         ];
     }
 
     public function createUpdateUserCommand(): UpdateUserCommand
     {
         return new UpdateUserCommand(
-            id: Uuid::fromString($this->route('id')),
+            id: Uuid::fromString(auth('customer')->user()->id),
             name: $this->get('name'),
+            email: $this->get('email'),
         );
     }
 }

@@ -11,6 +11,7 @@ class UpdateUserCommand
     public function __construct(
         private UuidInterface $id,
         private string $name,
+        private string $email,
     ) {
     }
 
@@ -28,6 +29,7 @@ class UpdateUserCommand
     {
         return array_filter([
             'name' => $this->name,
+            'email' => $this->email,
         ]);
     }
 }

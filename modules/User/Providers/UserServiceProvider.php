@@ -28,9 +28,12 @@ class UserServiceProvider extends ModuleServiceProvider
 
     public function mapRoutes(): void
     {
-        Route::prefix('api/v1/users')
+        Route::prefix('api/v1/admin/users')
             ->middleware('api')
-            ->group($this->getModulePath() . '/Resources/routes/api.php');
+            ->group($this->getModulePath() . '/Resources/routes/dashboard.php');
 
+        Route::prefix('api/v1/auth')
+            ->middleware('api')
+            ->group($this->getModulePath() . '/Resources/routes/auth.php');
     }
 }

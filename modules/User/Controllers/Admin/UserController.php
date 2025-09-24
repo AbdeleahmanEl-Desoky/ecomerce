@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\User\Controllers;
+namespace Modules\User\Controllers\Admin;
 
 use BasePackage\Shared\Presenters\Json;
 use App\Http\Controllers\Controller;
@@ -10,12 +10,12 @@ use Illuminate\Http\JsonResponse;
 use Modules\User\Handlers\DeleteUserHandler;
 use Modules\User\Handlers\UpdateUserHandler;
 use Modules\User\Presenters\UserPresenter;
-use Modules\User\Requests\CreateUserRequest;
-use Modules\User\Requests\DeleteUserRequest;
-use Modules\User\Requests\GetUserListRequest;
-use Modules\User\Requests\GetUserRequest;
-use Modules\User\Requests\UpdateUserRequest;
-use Modules\User\Services\UserCRUDService;
+use Modules\User\Requests\Admin\CreateUserRequest;
+use Modules\User\Requests\Admin\DeleteUserRequest;
+use Modules\User\Requests\Admin\GetUserListRequest;
+use Modules\User\Requests\Admin\GetUserRequest;
+use Modules\User\Requests\Admin\UpdateUserRequest;
+use Modules\User\Services\Admin\UserCRUDService;
 use Ramsey\Uuid\Uuid;
 
 class UserController extends Controller
@@ -24,8 +24,7 @@ class UserController extends Controller
         private UserCRUDService $userService,
         private UpdateUserHandler $updateUserHandler,
         private DeleteUserHandler $deleteUserHandler,
-    ) {
-    }
+    ) {}
 
     public function index(GetUserListRequest $request): JsonResponse
     {
@@ -34,7 +33,7 @@ class UserController extends Controller
             (int) $request->get('per_page', 10)
         );
 
-        return Json::buildItems(null,['users' => UserPresenter::collection($list['data']),'pagination' => $list['pagination']]);
+        return Json::item(UserPresenter::collection($list['data']), $list['pagination']);
     }
 
     public function show(GetUserRequest $request): JsonResponse
@@ -43,7 +42,7 @@ class UserController extends Controller
 
         $presenter = new UserPresenter($item);
 
-        return Json::buildItems('user', $presenter->getData());
+        return Json::item($presenter->getData());
     }
 
     public function store(CreateUserRequest $request): JsonResponse
@@ -52,7 +51,7 @@ class UserController extends Controller
 
         $presenter = new UserPresenter($createdItem);
 
-        return Json::buildItems('user', $presenter->getData());
+        return Json::item($presenter->getData());
     }
 
     public function update(UpdateUserRequest $request): JsonResponse
@@ -64,7 +63,7 @@ class UserController extends Controller
 
         $presenter = new UserPresenter($item);
 
-        return Json::buildItems('user', $presenter->getData());
+        return Json::item($presenter->getData());
     }
 
     public function delete(DeleteUserRequest $request): JsonResponse
