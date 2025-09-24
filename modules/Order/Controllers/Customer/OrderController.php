@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Modules\Order\Handlers\DeleteOrderHandler;
 use Modules\Order\Handlers\UpdateOrderHandler;
 use Modules\Order\Presenters\OrderPresenter;
-use Modules\Order\Requests\CreateOrderRequest;
+use Modules\Order\Requests\Customer\CreateOrderRequest;
 use Modules\Order\Requests\CancelOrderRequest;
 use Modules\Order\Requests\DeleteOrderRequest;
 use Modules\Order\Requests\GetOrderListRequest;

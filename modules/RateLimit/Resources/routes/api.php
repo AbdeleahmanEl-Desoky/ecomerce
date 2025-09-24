@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\RateLimit\Controllers\RateLimitController;
+use Modules\RateLimit\Controllers\Admin\RateLimitController;
 
 Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('statistics', [RateLimitController::class, 'statistics']);

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\RateLimit\Controllers;
+namespace Modules\RateLimit\Controllers\Admin;
 
 use BasePackage\Shared\Presenters\Json;
 use App\Http\Controllers\Controller;
