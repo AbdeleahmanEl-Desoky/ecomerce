@@ -30,6 +30,6 @@ class UpdateUserCommand
         return array_filter([
             'name' => $this->name,
             'email' => $this->email,
-        ]);
+        ], fn($value) => $value !== null);
     }
 }
