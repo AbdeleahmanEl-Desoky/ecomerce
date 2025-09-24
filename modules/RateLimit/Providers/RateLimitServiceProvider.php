@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Modules\Category\Providers;
+namespace Modules\RateLimit\Providers;
 
 use Illuminate\Support\Facades\Route;
 use BasePackage\Shared\Module\ModuleServiceProvider;
 
-class CategoryServiceProvider extends ModuleServiceProvider
+class RateLimitServiceProvider extends ModuleServiceProvider
 {
     public static function getModuleName(): string
     {
-        return 'Category';
+        return 'RateLimit';
     }
 
     public function boot(): void
@@ -28,12 +28,8 @@ class CategoryServiceProvider extends ModuleServiceProvider
 
     public function mapRoutes(): void
     {
-        Route::prefix('api/v1/admin/categories')
+        Route::prefix('api/v1/admin/rate_limits')
             ->middleware('api')
-            ->group($this->getModulePath() . '/Resources/routes/admin.php');
-
-        Route::prefix('api/v1/customer/categories')
-            ->middleware('api')
-            ->group($this->getModulePath() . '/Resources/routes/customer.php');
+            ->group($this->getModulePath() . '/Resources/routes/api.php');
     }
 }

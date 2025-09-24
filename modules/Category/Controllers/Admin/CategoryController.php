@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Category\Controllers;
+namespace Modules\Category\Controllers\Admin;
 
 use BasePackage\Shared\Presenters\Json;
 use App\Http\Controllers\Controller;

@@ -18,7 +18,7 @@ class UpdateProductRequest extends FormRequest
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
             'stock_quantity' => 'required|integer|min:0',
-            'sku' => 'required|string|max:255|unique:products,sku',
+            'sku' => 'required|string|max:255|unique:products,sku,' . $this->route('id'),
             'status' => 'required|in:active,inactive',
             'category_id' => 'required|uuid|exists:categories,id',
         ];
@@ -28,6 +28,7 @@ class UpdateProductRequest extends FormRequest
     {
         return new UpdateProductCommand(
             id: Uuid::fromString($this->route('id')),
+            name: $this->get('name'),
             description: $this->get('description'),
             price: (float) $this->get('price'),
             stock_quantity: (int) $this->get('stock_quantity'),
