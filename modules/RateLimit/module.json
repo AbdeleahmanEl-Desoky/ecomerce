@@ -1,0 +1,14 @@
+{
+    "name": "RateLimit",
+    "alias": "ratelimit",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\RateLimit\\Providers\\RateLimitServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": [],
+    "namespace": "Modules"
+}

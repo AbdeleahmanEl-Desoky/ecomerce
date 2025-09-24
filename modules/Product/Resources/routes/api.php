@@ -2,11 +2,26 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Product\Controllers\ProductController;
+use App\Http\Middleware\CustomRateLimitMiddleware;
 
-Route::group(['middleware' => ['auth:admin']], function () {
-    Route::get('/', [ProductController::class, 'index']);
-    Route::post('/', [ProductController::class, 'store']);
-    Route::get('/{id}', [ProductController::class, 'show']);
-    Route::put('/{id}', [ProductController::class, 'update']);
-    Route::delete('/{id}', [ProductController::class, 'delete']);
+Route::group(['middleware' => ['auth:admin', CustomRateLimitMiddleware::class . ':admin']], function () {
+    // Product listing with higher limits
+    Route::get('/', [ProductController::class, 'index'])
+        ->middleware(CustomRateLimitMiddleware::class . ':products');
+    
+    // Product creation
+    Route::post('/', [ProductController::class, 'store'])
+        ->middleware(CustomRateLimitMiddleware::class . ':api');
+    
+    // Product details
+    Route::get('/{id}', [ProductController::class, 'show'])
+        ->middleware(CustomRateLimitMiddleware::class . ':products');
+    
+    // Product updates
+    Route::put('/{id}', [ProductController::class, 'update'])
+        ->middleware(CustomRateLimitMiddleware::class . ':api');
+    
+    // Product deletion
+    Route::delete('/{id}', [ProductController::class, 'delete'])
+        ->middleware(CustomRateLimitMiddleware::class . ':api');
 });
