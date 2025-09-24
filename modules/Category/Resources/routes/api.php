@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Category\Controllers\CategoryController;
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/', [CategoryController::class, 'index']);
     Route::post('/', [CategoryController::class, 'store']);
     Route::get('/{id}', [CategoryController::class, 'show']);

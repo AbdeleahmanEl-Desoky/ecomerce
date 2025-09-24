@@ -10,6 +10,8 @@ class CreateCategoryDTO
 {
     public function __construct(
         public string $name,
+        public ?string $slug = null,
+        public ?string $parent_id = null,
     ) {
     }
 
@@ -17,6 +19,8 @@ class CreateCategoryDTO
     {
         return [
             'name' => $this->name,
+            'slug' => $this->slug,
+            'parent_id' => $this->parent_id,
         ];
     }
 }

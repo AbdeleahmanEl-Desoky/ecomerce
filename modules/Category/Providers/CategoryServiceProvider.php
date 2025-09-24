@@ -28,7 +28,7 @@ class CategoryServiceProvider extends ModuleServiceProvider
 
     public function mapRoutes(): void
     {
-        Route::prefix('api/v1/categories')
+        Route::prefix('api/v1/admin/categories')
             ->middleware('api')
             ->group($this->getModulePath() . '/Resources/routes/api.php');
 

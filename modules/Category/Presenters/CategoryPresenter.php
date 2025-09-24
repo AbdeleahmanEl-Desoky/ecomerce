@@ -21,6 +21,8 @@ class CategoryPresenter extends AbstractPresenter
         return [
             'id' => $this->category->id,
             'name' => $this->category->name,
+            'slug' => $this->category->slug,
+            'parent' => $this->category->parent?(new CategoryPresenter($this->category->parent))->getData():null,
         ];
     }
 }

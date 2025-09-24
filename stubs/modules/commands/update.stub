@@ -28,6 +28,6 @@ class Update$STUDLY_NAME$Command
     {
         return array_filter([
             'name' => $this->name,
-        ]);
+        ], fn($value) => $value !== null);
     }
 }

@@ -20,6 +20,31 @@ class CategoryRepository extends BaseRepository
     {
         parent::__construct($model);
     }
+    public function paginatedWithRelations(
+        array $conditions = [],
+        array $with = [],
+        int $page = 1,
+        int $perPage = 15,
+        string $orderBy = 'created_at',
+        string $sortBy = 'desc'
+    ) {
+        if (method_exists($this->model, 'scopeFilter')) {
+            $query = $this->model->filter(request()->all())->where($conditions);
+        } else {
+            $query = $this->model->where($conditions);
+        }
+
+        $query->with($with);
+
+        $count = $query->count();
+        $paginatedData = $query->forPage($page, $perPage)->orderBy($orderBy, $sortBy)->get();
+        $paginationArray = $this->getPaginationInformation($page, $perPage, $count);
+
+        return [
+            'pagination' => $paginationArray['pagination'],
+            'data' => $paginatedData,
+        ];
+    }
 
     public function getCategoryList(?int $page, ?int $perPage = 10): Collection
     {

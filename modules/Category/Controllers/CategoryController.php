@@ -34,7 +34,7 @@ class CategoryController extends Controller
             (int) $request->get('per_page', 10)
         );
 
-        return Json::item(null,['categories' => CategoryPresenter::collection($list['data']),'pagination' => $list['pagination']]);
+        return Json::item(CategoryPresenter::collection($list['data']),$list['pagination']);
     }
 
     public function show(GetCategoryRequest $request): JsonResponse

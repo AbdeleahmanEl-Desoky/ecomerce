@@ -13,7 +13,9 @@ class CreateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:categories,slug',
+            'parent_id' => 'nullable|uuid|exists:categories,id',
         ];
     }
 
@@ -21,6 +23,8 @@ class CreateCategoryRequest extends FormRequest
     {
         return new CreateCategoryDTO(
             name: $this->get('name'),
+            slug: $this->get('slug'),
+            parent_id: $this->get('parent_id'),
         );
     }
 }
