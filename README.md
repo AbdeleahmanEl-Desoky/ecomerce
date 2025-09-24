@@ -1,61 +1,346 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+##  Installation
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Step 1: Clone the Repository
 
-## About Laravel
+```bash
+git clone https://github.com/AbdeleahmanEl-Desoky/ecomerce.git
+cd ecomerce
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Step 2: Install Dependencies
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```bash
+# Install PHP dependencies
+composer install
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
+### Step 3: Environment Configuration
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+# Copy environment file
+cp .env.example .env
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# Generate application key
+php artisan key:generate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Generate JWT secret
+php artisan jwt:secret
 
-## Laravel Sponsors
+### Step 4: Configure Environment Variables
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Edit the `.env` file with your configuration:
 
-### Premium Partners
+```env
+# Application
+APP_NAME="Laravel E-Commerce API"
+APP_ENV=local
+APP_KEY=base64:YOUR_GENERATED_KEY
+APP_DEBUG=true
+APP_URL=http://localhost:8000
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# Database Configuration
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ecommerce_db
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
 
-## Contributing
+# JWT Configuration
+JWT_SECRET=your_jwt_secret
+JWT_TTL=60
+JWT_REFRESH_TTL=20160
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# Cache Configuration (Redis recommended)
+CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+QUEUE_CONNECTION=redis
 
-## Code of Conduct
+# Redis Configuration
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Mail Configuration
+MAIL_MAILER=smtp
+MAIL_HOST=mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="noreply@ecommerce.local"
+MAIL_FROM_NAME="${APP_NAME}"
+```
 
-## Security Vulnerabilities
+## 🗄️ Database Setup
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Step 1: Create Database
 
-## License
+```bash
+# Create MySQL database
+mysql -u root -p
+CREATE DATABASE ecommerce_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+EXIT;
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Step 2: Run Migrations
+
+```bash
+# Run database migrations
+php artisan migrate
+```
+
+### Step 3: Seed Database with Test Data
+
+```bash
+# Seed database with realistic test data
+php artisan db:seed
+
+# Or run fresh migration with seeding
+php artisan migrate:fresh --seed
+```
+
+### 📊 Seeded Data Overview
+
+After seeding, you'll have:
+
+- **~21 Users**: 6 admins + 15 customers
+- **~69 Categories**: 3-level nested structure
+- **~71 Products**: Realistic products with proper categorization
+
+## 🏃‍♂️ Running the Application
+
+### Development Server
+
+```bash
+# Start Laravel development server
+php artisan serve
+
+# Application will be available at:
+# http://localhost:8000
+```
+
+### Queue Worker (Optional)
+
+```bash
+# Start queue worker for background jobs
+php artisan queue:work
+```
+
+### Cache Optimization (Production)
+
+```bash
+# Optimize for production
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+composer install --optimize-autoloader --no-dev
+```
+
+## 🔑 Test Credentials
+
+After seeding, use these credentials for testing:
+
+### Admin Users
+| Email | Password | Role |
+|-------|----------|------|
+| admin@ecommerce.com | admin123 | admin |
+| john.admin@ecommerce.com | password123 | admin |
+| sarah.manager@ecommerce.com | password123 | admin |
+
+### Customer Users
+| Email | Password | Role |
+|-------|----------|------|
+| alice@example.com | customer123 | customer |
+| bob@example.com | customer123 | customer |
+| carol@example.com | customer123 | customer |
+
+## 📚 API Documentation
+
+### Base URL
+```
+http://localhost:8000/api/v1
+```
+
+### Authentication Endpoints
+
+#### Admin Authentication
+```bash
+# Admin Login
+POST /api/v1/admin/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@ecommerce.com",
+  "password": "admin123"
+}
+```
+
+#### Customer Authentication
+```bash
+# Customer Registration
+POST /api/v1/customer/auth/register
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+# Customer Login
+POST /api/v1/customer/auth/login
+Content-Type: application/json
+
+{
+  "email": "alice@example.com",
+  "password": "customer123"
+}
+```
+
+### Product Endpoints
+
+```bash
+# List Products (Public)
+GET /api/v1/products?page=1&per_page=10
+
+# Get Product Details (Public)
+GET /api/v1/products/{id}
+
+# Create Product (Admin Only)
+POST /api/v1/admin/products
+Authorization: Bearer {admin_token}
+Content-Type: application/json
+
+{
+  "name": "iPhone 15 Pro",
+  "description": "Latest iPhone with advanced features",
+  "price": 999.99,
+  "stock_quantity": 50,
+  "sku": "IPHONE-15-PRO",
+  "status": "active",
+  "category_id": "category-uuid"
+}
+```
+
+### Order Endpoints
+
+```bash
+# Create Order (Customer)
+POST /api/v1/customer/orders
+Authorization: Bearer {customer_token}
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "product_id": "product-uuid",
+      "quantity": 2,
+      "price_at_time": 99.99
+    }
+  ],
+  "notes": "Please deliver after 5 PM"
+}
+
+# List Customer Orders
+GET /api/v1/customer/orders
+Authorization: Bearer {customer_token}
+
+# Cancel Order (Within 24 hours)
+PATCH /api/v1/customer/orders/{id}/cancel
+Authorization: Bearer {customer_token}
+```
+
+### Category Endpoints
+
+```bash
+# List Categories (Public)
+GET /api/v1/categories
+
+# Create Category (Admin Only)
+POST /api/v1/admin/categories
+Authorization: Bearer {admin_token}
+Content-Type: application/json
+
+{
+  "name": "Electronics",
+  "slug": "electronics",
+  "parent_id": null
+}
+```
+
+### Rate Limiting
+
+API endpoints are protected with rate limiting:
+
+- **General API**: 60 requests/minute
+- **Authentication**: 5 requests/5 minutes
+- **Orders**: 10 requests/minute
+- **Products**: 100 requests/minute
+- **Admin**: 200 requests/minute
+
+## 🏗️ Architecture
+
+### Modular Structure
+
+```
+modules/
+├── Category/          # Category management
+├── Order/            # Order processing
+├── Product/          # Product management
+├── RateLimit/        # API rate limiting
+└── User/             # User authentication
+```
+
+### Service Layer Pattern
+
+- **Controllers**: Handle HTTP requests/responses
+- **Services**: Business logic and orchestration
+- **Repositories**: Data access layer
+- **Models**: Data representation
+- **DTOs**: Data transfer objects
+- **Events/Jobs**: Asynchronous processing
+
+### Key Design Patterns
+
+- **Repository Pattern**: Data access abstraction
+- **Service Layer**: Business logic separation
+- **DTO Pattern**: Clean data transfer
+- **Event-Driven**: Decoupled components
+- **SOLID Principles**: Maintainable code
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### 1. JWT Secret Not Set
+```bash
+php artisan jwt:secret
+```
+
+#### 2. Database Connection Error
+- Check database credentials in `.env`
+- Ensure database server is running
+- Verify database exists
+
+#### 3. Permission Errors
+```bash
+# Fix storage permissions
+chmod -R 775 storage bootstrap/cache
+chown -R www-data:www-data storage bootstrap/cache
+```
+
+#### 4. Composer Dependencies
+```bash
+# Clear composer cache
+composer clear-cache
+composer install
+```
+
+#### 5. Application Cache Issues
+```bash
+# Clear all caches
+php artisan cache:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
