@@ -73,8 +73,6 @@ class DatabaseSeeder extends Seeder
                 ['Customer', 'alice@example.com', 'customer123'],
                 ['Customer', 'bob@example.com', 'customer123'],
             ]
-        );
-        
-        $this->command->warn('⚠️  Remember to change default passwords in production!');
+        );        
     }
 }
