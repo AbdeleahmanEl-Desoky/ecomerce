@@ -1,15 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Order\Controllers\OrderController;
+use Modules\Order\Controllers\Customer\OrderController;
 use App\Http\Middleware\CustomRateLimitMiddleware;
 
-Route::group(['middleware' => ['auth:admin', CustomRateLimitMiddleware::class . ':admin']], function () {
-    // Order listing with higher limits for admins
+Route::group(['middleware' => ['auth:customer', CustomRateLimitMiddleware::class . ':customer']], function () {
+    // Order listing with higher limits for customers
     Route::get('/', [OrderController::class, 'index']);
     
     // Order creation with specific rate limiting
-    Route::post('/', [OrderController::class, 'store'])
+    Route::post('/', action: [OrderController::class, 'store'])
         ->middleware(CustomRateLimitMiddleware::class . ':orders');
     
     // Stock status with moderate limiting
@@ -25,9 +25,5 @@ Route::group(['middleware' => ['auth:admin', CustomRateLimitMiddleware::class . 
     
     // Order cancellation with strict limiting
     Route::patch('/{id}/cancel', [OrderController::class, 'cancel'])
-        ->middleware(CustomRateLimitMiddleware::class . ':orders');
-    
-    // Order deletion with strict limiting
-    Route::delete('/{id}', [OrderController::class, 'delete'])
         ->middleware(CustomRateLimitMiddleware::class . ':orders');
 });

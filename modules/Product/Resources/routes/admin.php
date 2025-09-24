@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Product\Controllers\ProductController;
 use App\Http\Middleware\CustomRateLimitMiddleware;
+use Modules\Product\Controllers\Admin\ProductController;
 
 Route::group(['middleware' => ['auth:admin', CustomRateLimitMiddleware::class . ':admin']], function () {
     // Product listing with higher limits

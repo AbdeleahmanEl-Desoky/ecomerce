@@ -39,10 +39,13 @@ class OrderServiceProvider extends ModuleServiceProvider
     {
         Route::prefix('api/v1/admin/orders')
             ->middleware('api')
-            ->group($this->getModulePath() . '/Resources/routes/api.php');
+            ->group($this->getModulePath() . '/Resources/routes/admin.php');
 
+        Route::prefix('api/v1/customer/orders')
+            ->middleware('api')
+            ->group($this->getModulePath() . '/Resources/routes/customer.php');
     }
-    
+
     /**
      * Register model observers
      */
@@ -50,7 +53,7 @@ class OrderServiceProvider extends ModuleServiceProvider
     {
         Order::observe(OrderObserver::class);
     }
-    
+
     /**
      * Register event listeners
      */

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Category\Controllers\CategoryController;
+use Modules\Category\Controllers\Admin\CategoryController;
 
 Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/', [CategoryController::class, 'index']);

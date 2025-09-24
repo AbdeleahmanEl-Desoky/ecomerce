@@ -30,7 +30,10 @@ class ProductServiceProvider extends ModuleServiceProvider
     {
         Route::prefix('api/v1/admin/products')
             ->middleware('api')
-            ->group($this->getModulePath() . '/Resources/routes/api.php');
+            ->group($this->getModulePath() . '/Resources/routes/admin.php');
 
+        Route::prefix('api/v1/customer/products')
+        ->middleware('api')
+        ->group($this->getModulePath() . '/Resources/routes/customer.php');
     }
 }

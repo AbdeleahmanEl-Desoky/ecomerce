@@ -77,9 +77,10 @@ class OrderCRUDService
         });
     }
 
-    public function list(int $page = 1, int $perPage = 10): array
+    public function list(int $page = 1, int $perPage = 10,array $condations): array
     {
         return $this->repository->paginated(
+            conditions: $condations,
             page: $page,
             perPage: $perPage,
         );

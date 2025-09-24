@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Modules\Order\Controllers;
+namespace Modules\Order\Controllers\Customer;
 
 use BasePackage\Shared\Presenters\Json;
 use App\Http\Controllers\Controller;
@@ -33,10 +33,11 @@ class OrderController extends Controller
     {
         $list = $this->orderService->list(
             (int) $request->get('page', 1),
-            (int) $request->get('per_page', 10)
+            (int) $request->get('per_page', 10),
+            ['user_id'=> auth('customer')->user()->id],
         );
 
-        return Json::item(null,['orders' => OrderPresenter::collection($list['data']),'pagination' => $list['pagination']]);
+        return Json::item(OrderPresenter::collection($list['data']),$list['pagination']);
     }
 
     public function show(GetOrderRequest $request): JsonResponse
@@ -95,14 +96,6 @@ class OrderController extends Controller
             return Json::error('Failed to cancel order: ' . $e->getMessage(), 500);
         }
     }
-
-    public function delete(DeleteOrderRequest $request): JsonResponse
-    {
-        $this->deleteOrderHandler->handle(Uuid::fromString($request->route('id')));
-
-        return Json::deleted();
-    }
-    
     /**
      * Get stock status for dashboard
      */

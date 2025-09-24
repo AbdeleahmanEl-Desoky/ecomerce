@@ -14,7 +14,6 @@ class CreateOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|uuid|exists:users,id',
             'notes' => 'nullable|string',
             'items' => 'required|array|min:1',
             'items.*.product_id' => 'required|uuid|exists:products,id',
@@ -35,7 +34,7 @@ class CreateOrderRequest extends FormRequest
         }
 
         return new CreateOrderDTO(
-            user_id: Uuid::fromString($this->get('user_id')),
+            user_id: Uuid::fromString(auth('customer')->user()->id),
             items: $items,
             notes: $this->get('notes'),
         );

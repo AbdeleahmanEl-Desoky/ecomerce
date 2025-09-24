@@ -29,8 +29,6 @@ class OrderPresenter extends AbstractPresenter
             'discount_percentage' => $this->order->discount_percentage,
             'has_discount' => $this->order->has_discount,
             'notes' => $this->order->notes,
-            'created_at' => $this->order->created_at,
-            'updated_at' => $this->order->updated_at,
         ];
 
         // Add detailed information for single order view

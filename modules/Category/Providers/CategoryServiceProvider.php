@@ -30,7 +30,10 @@ class CategoryServiceProvider extends ModuleServiceProvider
     {
         Route::prefix('api/v1/admin/categories')
             ->middleware('api')
-            ->group($this->getModulePath() . '/Resources/routes/api.php');
+            ->group($this->getModulePath() . '/Resources/routes/admin.php');
 
+        Route::prefix('api/v1/customer/categories')
+            ->middleware('api')
+            ->group($this->getModulePath() . '/Resources/routes/customer.php');
     }
 }
