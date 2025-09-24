@@ -34,7 +34,7 @@ class ProductController extends Controller
             (int) $request->get('per_page', 10)
         );
 
-        return Json::item(null,['products' => ProductPresenter::collection($list['data']),'pagination' => $list['pagination']]);
+        return Json::item(ProductPresenter::collection($list['data']),$list['pagination']);
     }
 
     public function show(GetProductRequest $request): JsonResponse

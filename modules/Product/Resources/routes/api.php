@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Product\Controllers\ProductController;
 
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' => ['auth:admin']], function () {
     Route::get('/', [ProductController::class, 'index']);
     Route::post('/', [ProductController::class, 'store']);
     Route::get('/{id}', [ProductController::class, 'show']);
