@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Order\Repositories;
 
-use BasePackage\Shared\Repositories\BaseRepository;
+use App\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
 use Modules\Order\Models\Order;

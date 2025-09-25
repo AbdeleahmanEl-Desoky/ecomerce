@@ -7,6 +7,7 @@ namespace Modules\Category\Models;
 use BasePackage\Shared\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Modules\Category\Database\factories\CategoryFactory;
@@ -19,8 +20,8 @@ class Category extends Model
     use HasFactory;
     use UuidTrait;
     use BaseFilterable;
+    use SoftDeletes;
     //use HasTranslations;
-    //use SoftDeletes;
 
     //public array $translatable = [];
 

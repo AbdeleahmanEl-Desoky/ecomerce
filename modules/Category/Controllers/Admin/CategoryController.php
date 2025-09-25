@@ -73,4 +73,60 @@ class CategoryController extends Controller
 
         return Json::deleted();
     }
+        
+    /**
+     * Get all orders including soft deleted
+     */
+    public function indexWithTrashed(GetCategoryListRequest $request): JsonResponse
+    {
+        $page = (int) $request->get('page', 1);
+        $perPage = (int) $request->get('per_page', 10);
+        
+        $list = $this->categoryService->listWithTrashed($page, $perPage);
+        return Json::item(CategoryPresenter::collection($list['data']), $list['pagination']);
+    }
+
+    /**
+     * Get only soft deleted orders
+     */
+    public function indexOnlyTrashed(GetCategoryListRequest $request): JsonResponse
+    {
+        $page = (int) $request->get('page', 1);
+        $perPage = (int) $request->get('per_page', 10);
+        
+        $list = $this->categoryService->listOnlyTrashed($page, $perPage);
+        return Json::item(CategoryPresenter::collection($list['data']), $list['pagination']);
+    }
+
+    /**
+     * Restore a soft deleted order
+     */
+    public function restore(GetCategoryRequest $request): JsonResponse
+    {
+        $id = Uuid::fromString($request->route('id'));
+        
+        $restored = $this->categoryService->restore($id);
+        
+        if ($restored) {
+            return Json::success('Order restored successfully');
+        }
+        
+        return Json::error('Failed to restore order', 400);
+    }
+
+    /**
+     * Permanently delete an order
+     */
+    public function forceDelete(GetCategoryRequest $request): JsonResponse
+    {
+        $id = Uuid::fromString($request->route('id'));
+        
+        $deleted = $this->categoryService->forceDelete($id);
+        
+        if ($deleted) {
+            return Json::success('Order permanently deleted');
+        }
+        
+        return Json::error('Failed to delete order', 400);
+    }
 }

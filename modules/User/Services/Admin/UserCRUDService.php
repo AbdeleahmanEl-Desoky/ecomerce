@@ -53,4 +53,53 @@ class UserCRUDService
             id: $id,
         );
     }
+
+    /**
+     * Soft delete a user
+     */
+    public function delete(UuidInterface $id): bool
+    {
+        $user = $this->get($id);
+        return $user->delete();
+    }
+
+    /**
+     * Get all users including soft deleted
+     */
+    public function listWithTrashed(int $page = 1, int $perPage = 10): array
+    {
+        return $this->repository->paginatedWithTrashed(
+            conditions: [],
+            page: $page,
+            perPage: $perPage,
+        );
+    }
+
+    /**
+     * Get only soft deleted users
+     */
+    public function listOnlyTrashed(int $page = 1, int $perPage = 10): array
+    {
+        return $this->repository->paginatedOnlyTrashed(
+            conditions: [],
+            page: $page,
+            perPage: $perPage,
+        );
+    }
+
+    /**
+     * Restore a soft deleted user
+     */
+    public function restore(UuidInterface $id): bool
+    {
+        return $this->repository->restoreUser($id);
+    }
+
+    /**
+     * Permanently delete a user
+     */
+    public function forceDelete(UuidInterface $id): bool
+    {
+        return $this->repository->forceDeleteUser($id);
+    }
 }

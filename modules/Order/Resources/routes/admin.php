@@ -5,6 +5,12 @@ use Modules\Order\Controllers\Admin\OrderController;
 use App\Http\Middleware\CustomRateLimitMiddleware;
 
 Route::group(['middleware' => ['auth:admin', CustomRateLimitMiddleware::class . ':admin']], function () {
+    // Soft Delete Routes
+    Route::get('/with-trashed', [OrderController::class, 'indexWithTrashed']);
+    Route::get('/only-trashed', [OrderController::class, 'indexOnlyTrashed']);
+    Route::post('/{id}/restore', [OrderController::class, 'restore']);
+    Route::delete('/{id}/force', [OrderController::class, 'forceDelete']);
+    
     // Order listing with higher limits for admins
     Route::get('/', [OrderController::class, 'index']);
     

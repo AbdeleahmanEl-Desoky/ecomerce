@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Category\Repositories;
 
+use App\Repositories\BaseRepository as RepositoriesBaseRepository;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
@@ -14,7 +15,7 @@ use Modules\Category\Models\Category;
  * @method Category findOneOrFail($id)
  * @method Category findOneByOrFail(array $data)
  */
-class CategoryRepository extends BaseRepository
+class CategoryRepository extends RepositoriesBaseRepository
 {
     public function __construct(Category $model)
     {
@@ -72,4 +73,5 @@ class CategoryRepository extends BaseRepository
     {
         return $this->delete($id);
     }
+    
 }

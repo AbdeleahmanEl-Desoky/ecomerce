@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\Product\Repositories;
 
+use App\Repositories\BaseRepository as RepositoriesBaseRepository;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Ramsey\Uuid\UuidInterface;
@@ -14,7 +15,7 @@ use Modules\Product\Models\Product;
  * @method Product findOneOrFail($id)
  * @method Product findOneByOrFail(array $data)
  */
-class ProductRepository extends BaseRepository
+class ProductRepository extends RepositoriesBaseRepository
 {
     public function __construct(Product $model)
     {
