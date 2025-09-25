@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Modules\User\Repositories;
 
+use App\Repositories\BaseRepository as RepositoriesBaseRepository;
 use BasePackage\Shared\Repositories\BaseRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
@@ -15,7 +16,7 @@ use Modules\User\Models\User;
  * @method User findOneOrFail($id)
  * @method User findOneByOrFail(array $data)
  */
-class UserRepository extends BaseRepository
+class UserRepository extends RepositoriesBaseRepository
 {
     public function __construct(User $model)
     {
@@ -44,8 +45,27 @@ class UserRepository extends BaseRepository
         return $this->update($id, $data);
     }
 
+    /**
+     * Delete user (soft delete)
+     */
     public function deleteUser(UuidInterface $id): bool
     {
         return $this->delete($id);
+    }
+
+    /**
+     * Restore soft deleted user
+     */
+    public function restoreUser(UuidInterface $id): bool
+    {
+        return $this->restore($id);
+    }
+
+    /**
+     * Force delete user permanently
+     */
+    public function forceDeleteUser(UuidInterface $id): bool
+    {
+        return $this->forceDelete($id);
     }
 }

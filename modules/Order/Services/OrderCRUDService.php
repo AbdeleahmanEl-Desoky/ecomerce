@@ -147,6 +147,46 @@ class OrderCRUDService
             'out_of_stock_count' => $this->stockService->getOutOfStockProducts()->count(),
         ];
     }
+
+    /**
+     * Get all orders including soft deleted
+     */
+    public function listWithTrashed(int $page = 1, int $perPage = 10): array
+    {
+        return $this->repository->paginatedWithTrashed(
+            conditions: [],
+            page: $page,
+            perPage: $perPage,
+        );
+    }
+
+    /**
+     * Get only soft deleted orders
+     */
+    public function listOnlyTrashed(int $page = 1, int $perPage = 10): array
+    {
+        return $this->repository->paginatedOnlyTrashed(
+            conditions: [],
+            page: $page,
+            perPage: $perPage,
+        );
+    }
+
+    /**
+     * Restore a soft deleted order
+     */
+    public function restore(UuidInterface $id): bool
+    {
+        return $this->repository->restore($id);
+    }
+
+    /**
+     * Permanently delete an order
+     */
+    public function forceDelete(UuidInterface $id): bool
+    {
+        return $this->repository->forceDelete($id);
+    }
     
     /**
      * Dispatch async jobs for order processing

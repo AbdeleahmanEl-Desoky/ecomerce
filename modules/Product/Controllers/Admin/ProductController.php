@@ -73,4 +73,60 @@ class ProductController extends Controller
 
         return Json::deleted();
     }
+    /**
+     * Get all orders including soft deleted
+     */
+    public function indexWithTrashed(GetProductListRequest $request): JsonResponse
+    {
+        $page = (int) $request->get('page', 1);
+        $perPage = (int) $request->get('per_page', 10);
+        
+        $list = $this->productService->listWithTrashed($page, $perPage);
+        return Json::item(ProductPresenter::collection($list['data']), $list['pagination']);
+    }
+
+    /**
+     * Get only soft deleted orders
+     */
+    public function indexOnlyTrashed(GetProductListRequest $request): JsonResponse
+    {
+        $page = (int) $request->get('page', 1);
+        $perPage = (int) $request->get('per_page', 10);
+        
+        $list = $this->productService->listOnlyTrashed($page, $perPage);
+        return Json::item(ProductPresenter::collection($list['data']), $list['pagination']);
+    }
+
+    /**
+     * Restore a soft deleted order
+     */
+    public function restore(GetProductRequest $request): JsonResponse
+    {
+        $id = Uuid::fromString($request->route('id'));
+        
+        $restored = $this->productService->restore($id);
+        
+        if ($restored) {
+            return Json::success('Order restored successfully');
+        }
+        
+        return Json::error('Failed to restore order', 400);
+    }
+
+    /**
+     * Permanently delete an order
+     */
+    public function forceDelete(GetProductRequest $request): JsonResponse
+    {
+        $id = Uuid::fromString($request->route('id'));
+        
+        $deleted = $this->productService->forceDelete($id);
+        
+        if ($deleted) {
+            return Json::success('Order permanently deleted');
+        }
+        
+        return Json::error('Failed to delete order', 400);
+    }
+
 }

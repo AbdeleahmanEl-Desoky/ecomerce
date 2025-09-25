@@ -7,6 +7,7 @@ namespace Modules\User\Models;
 use BasePackage\Shared\Traits\UuidTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\User\Database\factories\UserFactory;
 use BasePackage\Shared\Traits\BaseFilterable;
 //use BasePackage\Shared\Traits\HasTranslations;
@@ -17,8 +18,8 @@ class User extends Authenticatable implements JWTSubject
     use HasFactory;
     use UuidTrait;
     use BaseFilterable;
+    use SoftDeletes;
     //use HasTranslations;
-    //use SoftDeletes;
 
     //public array $translatable = [];
 

@@ -7,6 +7,7 @@ namespace Modules\Order\Controllers\Admin;
 use BasePackage\Shared\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Modules\Order\Handlers\DeleteOrderHandler;
 use Modules\Order\Handlers\UpdateOrderHandler;
 use Modules\Order\Presenters\OrderPresenter;
@@ -112,5 +113,61 @@ class OrderController extends Controller
         $stockStatus = $this->orderService->getStockStatus();
         
         return Json::item($stockStatus);
+    }
+
+    /**
+     * Get all orders including soft deleted
+     */
+    public function indexWithTrashed(Request $request): JsonResponse
+    {
+        $page = (int) $request->get('page', 1);
+        $perPage = (int) $request->get('per_page', 10);
+        
+        $list = $this->orderService->listWithTrashed($page, $perPage);
+        return Json::item(OrderPresenter::collection($list['data']), $list['pagination']);
+    }
+
+    /**
+     * Get only soft deleted orders
+     */
+    public function indexOnlyTrashed(Request $request): JsonResponse
+    {
+        $page = (int) $request->get('page', 1);
+        $perPage = (int) $request->get('per_page', 10);
+        
+        $list = $this->orderService->listOnlyTrashed($page, $perPage);
+        return Json::item(OrderPresenter::collection($list['data']), $list['pagination']);
+    }
+
+    /**
+     * Restore a soft deleted order
+     */
+    public function restore(Request $request): JsonResponse
+    {
+        $id = Uuid::fromString($request->route('id'));
+        
+        $restored = $this->orderService->restore($id);
+        
+        if ($restored) {
+            return Json::success('Order restored successfully');
+        }
+        
+        return Json::error('Failed to restore order', 400);
+    }
+
+    /**
+     * Permanently delete an order
+     */
+    public function forceDelete(Request $request): JsonResponse
+    {
+        $id = Uuid::fromString($request->route('id'));
+        
+        $deleted = $this->orderService->forceDelete($id);
+        
+        if ($deleted) {
+            return Json::success('Order permanently deleted');
+        }
+        
+        return Json::error('Failed to delete order', 400);
     }
 }

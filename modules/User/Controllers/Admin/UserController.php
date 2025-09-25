@@ -7,6 +7,7 @@ namespace Modules\User\Controllers\Admin;
 use BasePackage\Shared\Presenters\Json;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Modules\User\Handlers\DeleteUserHandler;
 use Modules\User\Handlers\UpdateUserHandler;
 use Modules\User\Presenters\UserPresenter;
@@ -71,5 +72,61 @@ class UserController extends Controller
         $this->deleteUserHandler->handle(Uuid::fromString($request->route('id')));
 
         return Json::deleted();
+    }
+
+    /**
+     * Get all users including soft deleted
+     */
+    public function indexWithTrashed(Request $request): JsonResponse
+    {
+        $page = (int) $request->get('page', 1);
+        $perPage = (int) $request->get('per_page', 10);
+        
+        $list = $this->userService->listWithTrashed($page, $perPage);
+        return Json::item(UserPresenter::collection($list['data']), $list['pagination']);
+    }
+
+    /**
+     * Get only soft deleted users
+     */
+    public function indexOnlyTrashed(Request $request): JsonResponse
+    {
+        $page = (int) $request->get('page', 1);
+        $perPage = (int) $request->get('per_page', 10);
+        
+        $list = $this->userService->listOnlyTrashed($page, $perPage);
+        return Json::item(UserPresenter::collection($list['data']), $list['pagination']);
+    }
+
+    /**
+     * Restore a soft deleted user
+     */
+    public function restore(Request $request): JsonResponse
+    {
+        $id = Uuid::fromString($request->route('id'));
+        
+        $restored = $this->userService->restore($id);
+        
+        if ($restored) {
+            return Json::success('User restored successfully');
+        }
+        
+        return Json::error('Failed to restore user', 400);
+    }
+
+    /**
+     * Permanently delete a user
+     */
+    public function forceDelete(Request $request): JsonResponse
+    {
+        $id = Uuid::fromString($request->route('id'));
+        
+        $deleted = $this->userService->forceDelete($id);
+        
+        if ($deleted) {
+            return Json::success('User permanently deleted');
+        }
+        
+        return Json::error('Failed to delete user', 400);
     }
 }

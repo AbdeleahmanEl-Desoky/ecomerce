@@ -5,6 +5,13 @@ use App\Http\Middleware\CustomRateLimitMiddleware;
 use Modules\Product\Controllers\Admin\ProductController;
 
 Route::group(['middleware' => ['auth:admin', CustomRateLimitMiddleware::class . ':admin']], function () {
+    
+    // Soft Delete Routes
+    Route::get('/with-trashed', [ProductController::class, 'indexWithTrashed']);
+    Route::get('/only-trashed', [ProductController::class, 'indexOnlyTrashed']);
+    Route::post('/{id}/restore', [ProductController::class, 'restore']);
+    Route::delete('/{id}/force', [ProductController::class, 'forceDelete']);
+        
     // Product listing with higher limits
     Route::get('/', [ProductController::class, 'index'])
         ->middleware(CustomRateLimitMiddleware::class . ':products');

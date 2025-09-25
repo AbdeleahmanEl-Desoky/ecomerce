@@ -695,240 +695,6 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "Order",
-					"item": [
-						{
-							"name": "List All orders",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{customer_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{base_url}}/customer/orders?page=1&per_page=10",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"customer",
-										"orders"
-									],
-									"query": [
-										{
-											"key": "page",
-											"value": "1"
-										},
-										{
-											"key": "per_page",
-											"value": "10"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Create orders",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{customer_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "POST",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{admin_token}}"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"notes\": \"Order qualifies for 10% discount\",\n    \"items\": [\n        {\n            \"product_id\": \"863fdb2b-088a-4931-b5fa-14f7911d3f22\",\n            \"quantity\": 1,\n            \"price_at_time\": 999.99\n        }\n    ]\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/customer/orders",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"customer",
-										"orders"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "View orders by ID",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{customer_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{admin_token}}"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{base_url}}/customer/orders/:id",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"customer",
-										"orders",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update orders",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{customer_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{admin_token}}"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"iPhone 15 Pro\",\n    \"description\": \"Latest iPhone with advanced features\",\n    \"price\": 999.99,\n    \"stock_quantity\": 50,\n    \"sku\": \"IPH15PRO001\",\n    \"status\": \"active\",\n    \"category_id\":\"ef9b3557-090a-40c4-bb91-c9bde504c87a\"\n}"
-								},
-								"url": {
-									"raw": "{{base_url}}/customer/orders/:id",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"customer",
-										"orders",
-										":id"
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Delete orders",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{customer_token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "PATCH",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Bearer {{admin_token}}"
-									},
-									{
-										"key": "Accept",
-										"value": "application/json"
-									}
-								],
-								"url": {
-									"raw": "{{base_url}}/customer/orders/:id/cancel",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"customer",
-										"orders",
-										":id",
-										"cancel"
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "2a75f26e-1666-4e67-9914-6733be98ef59"
-										}
-									]
-								}
-							},
-							"response": []
-						}
-					]
 				}
 			]
 		},
@@ -973,7 +739,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"updated@example.com\",\n    \"password\": \"password123\"\n}"
+									"raw": "{\n    \"email\": \"admin@ecommerce.com\",\n    \"password\": \"admin123\"\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/auth/admin/login",
@@ -1071,6 +837,184 @@
 					"name": "Users",
 					"item": [
 						{
+							"name": "soft delete",
+							"item": [
+								{
+									"name": "List with-trashed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/users/with-trashed?per_page=10&page=1&role=customer&name=&email=",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"users",
+												"with-trashed"
+											],
+											"query": [
+												{
+													"key": "per_page",
+													"value": "10"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "role",
+													"value": "customer",
+													"description": "admin - customer"
+												},
+												{
+													"key": "name",
+													"value": ""
+												},
+												{
+													"key": "email",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "only-trashed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/users/only-trashed",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"users",
+												"only-trashed"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "restore",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/users/:id/restore",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"users",
+												":id",
+												"restore"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "03c3c06f-0f8a-4eb5-a103-480160f01179"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "force delete",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/users/:id/force",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"users",
+												":id",
+												"force"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "06f49182-b2de-4050-a19d-639610b59e2a"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
 							"name": "List All Users",
 							"request": {
 								"auth": {
@@ -1146,7 +1090,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"name\": \"New User\",\n    \"email\": \"newuser@example.com1\",\n    \"password\": \"password123\",\n    \"password_confirmation\":\"password123\",\n    \"role\": \"admin\" //admin - customer\n}"
+									"raw": "{\n    \"name\": \"New User\",\n    \"email\": \"admin@ecommerce.com\",\n    \"password\": \"admin123\",\n    \"password_confirmation\":\"admin123\",\n    \"role\": \"admin\" //admin - customer\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/admin/users",
@@ -1264,7 +1208,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "084064eb-57e4-4f45-acb1-7788b74f0128"
+											"value": "03c3c06f-0f8a-4eb5-a103-480160f01179"
 										}
 									]
 								}
@@ -1276,6 +1220,184 @@
 				{
 					"name": "categories",
 					"item": [
+						{
+							"name": "soft delete",
+							"item": [
+								{
+									"name": "List with-trashed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/categories/with-trashed?per_page=10&page=1&role=customer&name=&email=",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"categories",
+												"with-trashed"
+											],
+											"query": [
+												{
+													"key": "per_page",
+													"value": "10"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "role",
+													"value": "customer",
+													"description": "admin - customer"
+												},
+												{
+													"key": "name",
+													"value": ""
+												},
+												{
+													"key": "email",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "only-trashed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/categories/only-trashed",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"categories",
+												"only-trashed"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "restore",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/categories/:id/restore",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"categories",
+												":id",
+												"restore"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "022a32b8-c54f-4b47-a0c3-efa027433ae0"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "force delete",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/categories/:id/force",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"categories",
+												":id",
+												"force"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "06f49182-b2de-4050-a19d-639610b59e2a"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
 						{
 							"name": "List All categories",
 							"request": {
@@ -1479,7 +1601,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+											"value": "022a32b8-c54f-4b47-a0c3-efa027433ae0"
 										}
 									]
 								}
@@ -1491,6 +1613,184 @@
 				{
 					"name": "Product",
 					"item": [
+						{
+							"name": "soft delete",
+							"item": [
+								{
+									"name": "List with-trashed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/products/with-trashed?per_page=10&page=1&role=customer&name=&email=",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"products",
+												"with-trashed"
+											],
+											"query": [
+												{
+													"key": "per_page",
+													"value": "10"
+												},
+												{
+													"key": "page",
+													"value": "1"
+												},
+												{
+													"key": "role",
+													"value": "customer",
+													"description": "admin - customer"
+												},
+												{
+													"key": "name",
+													"value": ""
+												},
+												{
+													"key": "email",
+													"value": ""
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "only-trashed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/products/only-trashed",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"products",
+												"only-trashed"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "restore",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/products/:id/restore",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"products",
+												":id",
+												"restore"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "01ee064f-375a-4ef7-ba20-d59751b47a00"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "force delete",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/products/:id/force",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"products",
+												":id",
+												"force"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "01ee064f-375a-4ef7-ba20-d59751b47a00"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
 						{
 							"name": "List All Product",
 							"request": {
@@ -1794,7 +2094,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+											"value": "01ee064f-375a-4ef7-ba20-d59751b47a00"
 										}
 									]
 								}
@@ -1806,6 +2106,173 @@
 				{
 					"name": "Order",
 					"item": [
+						{
+							"name": "soft delete",
+							"item": [
+								{
+									"name": "List with-trashed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/orders/with-trashed",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"orders",
+												"with-trashed"
+											],
+											"query": [
+												{
+													"key": "per_page",
+													"value": "10",
+													"disabled": true
+												},
+												{
+													"key": "page",
+													"value": "1",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "only-trashed",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/orders/only-trashed",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"orders",
+												"only-trashed"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "restore",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/orders/:id/restore",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"orders",
+												":id",
+												"restore"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "03c3c06f-0f8a-4eb5-a103-480160f01179"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "force delete",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{admin_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{base_url}}/admin/orders/:id/force",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"admin",
+												"orders",
+												":id",
+												"force"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "06f49182-b2de-4050-a19d-639610b59e2a"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
 						{
 							"name": "List All orders",
 							"request": {
@@ -1879,7 +2346,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"user_id\": \"5a178a5e-d872-47e4-8fe1-dac59a013a83\",\n    \"notes\": \"Order qualifies for 10% discount\",\n    \"items\": [\n        {\n            \"product_id\": \"863fdb2b-088a-4931-b5fa-14f7911d3f22\",\n            \"quantity\": 1,\n            \"price_at_time\": 999.99\n        }\n    ]\n}"
+									"raw": "{\n    \"user_id\": \"153db51c-3b02-4ee7-9b67-5afaebada3d9\",\n    \"notes\": \"Order qualifies for 10% discount\",\n    \"items\": [\n        {\n            \"product_id\": \"01ee064f-375a-4ef7-ba20-d59751b47a00\",\n            \"quantity\": 1,\n            \"price_at_time\": 999.99\n        }\n    ]\n}"
 								},
 								"url": {
 									"raw": "{{base_url}}/admin/orders",
@@ -1997,7 +2464,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "ec7c5e9d-4647-4459-883b-6a7e2950e4c8"
+											"value": "637c18b5-8ed1-4f83-8497-3308c45f9bb5"
 										}
 									]
 								}
